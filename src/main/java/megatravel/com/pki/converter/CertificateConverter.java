@@ -10,6 +10,7 @@ import megatravel.com.pki.domain.cert.CertificateDistribution;
 import megatravel.com.pki.domain.enums.KeyPurposeType;
 import megatravel.com.pki.generator.extension.holder.*;
 import megatravel.com.pki.generator.helper.PolicyDescriber;
+import megatravel.com.pki.generator.helper.PolicyQualifierDescriber;
 import megatravel.com.pki.util.GeneralException;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -81,17 +82,17 @@ public class CertificateConverter extends AbstractConverter {
     }
 
     public static CertificateDistribution toEntity(CertificateDistributionDTO distribution) {
-        return new CertificateDistribution(distribution.getSerialNumber(), distribution.isPrivateKey(),
-                distribution.isKeystore(), distribution.isTruststore(), distribution.getHostname(),
+        return new CertificateDistribution(distribution.getSerialNumber(),
+                distribution.getHostname(),
                 distribution.getDestination());
     }
 
     public static ExtensionHolders toExtensionHolders(CertificateRequestDTO certificateRequest) {
         Map<String, X509ExtensionHolder> holders = new HashMap<>();
         holders.put(BasicConstraintsHolder.class.getCanonicalName(), new BasicConstraintsHolder(
-                        certificateRequest.getBasicConstraints().isCritical(),
-                        certificateRequest.getBasicConstraints().iscA(),
-                        certificateRequest.getBasicConstraints().getPathLenConstraint())
+                certificateRequest.getBasicConstraints().isCritical(),
+                certificateRequest.getBasicConstraints().iscA(),
+                certificateRequest.getBasicConstraints().getPathLenConstraint())
         );
         if (certificateRequest.getAuthorityInfoAccess() != null) {
             holders.put(AuthorityInfoAccessHolder.class.getCanonicalName(), new AuthorityInfoAccessHolder(
@@ -105,11 +106,18 @@ public class CertificateConverter extends AbstractConverter {
         if (certificateRequest.getCertificatePolicies() != null) {
             holders.put(CertificatePoliciesHolder.class.getCanonicalName(), new CertificatePoliciesHolder(
                     certificateRequest.getCertificatePolicies().isCritical(),
-                    certificateRequest.getCertificatePolicies().getPolicies().entrySet()
+                    certificateRequest.getCertificatePolicies().getPolicies()
                             .stream()
-                            .map(entry -> new PolicyDescriber(entry.getKey(), entry.getValue()))
-                            .collect(Collectors.toList())
-                    )
+                            .map(certificatePolicy ->
+                                    new PolicyDescriber(certificatePolicy.getPolicyId(),
+                                            certificatePolicy.getQualifiers()
+                                                    .stream()
+                                                    .map(policyQualifier ->
+                                                            new PolicyQualifierDescriber(policyQualifier
+                                                            .getQualifierId().getQualifierId(),
+                                                                    policyQualifier.getQualifier()))
+                                                    .collect(Collectors.toList())))
+                            .collect(Collectors.toList()))
             );
         }
         if (certificateRequest.getKeyUsage() != null) {
@@ -126,9 +134,9 @@ public class CertificateConverter extends AbstractConverter {
 
         if (certificateRequest.getNameConstraints() != null) {
             holders.put(NameConstraintsHolder.class.getCanonicalName(), new NameConstraintsHolder(
-               certificateRequest.getNameConstraints().isCritical(),
-               certificateRequest.getNameConstraints().getPermitted(),
-               certificateRequest.getNameConstraints().getExcluded()
+                    certificateRequest.getNameConstraints().isCritical(),
+                    certificateRequest.getNameConstraints().getPermitted(),
+                    certificateRequest.getNameConstraints().getExcluded()
             ));
         }
 

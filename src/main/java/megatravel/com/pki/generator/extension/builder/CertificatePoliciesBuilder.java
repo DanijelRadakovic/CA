@@ -4,6 +4,8 @@ import megatravel.com.pki.generator.extension.holder.CertificatePoliciesHolder;
 import megatravel.com.pki.generator.extension.holder.X509ExtensionHolder;
 import megatravel.com.pki.util.GeneralNameValidator;
 import megatravel.com.pki.util.ValidationException;
+import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.x509.*;
 import org.bouncycastle.cert.CertIOException;
@@ -28,15 +30,19 @@ public class CertificatePoliciesBuilder implements X509ExtensionBuilder {
             List<PolicyInformation> policies = new ArrayList<>(cPHolder.getPolicies().size());
             cPHolder.getPolicies().forEach(policyDescriber -> {
                 policyDescriber.getQualifiers().forEach(qualifier -> {
-                    if (!validator.isValidURI(qualifier)) {
-                        throw new ValidationException("Policy qualifier must be vali URI.");
+                    if (!validator.isValidURI(qualifier.getQualifier())) {
+                        throw new ValidationException("Policy qualifier must be valid URI.");
                     }
                 });
-                policies.add(new PolicyInformation(policyDescriber.getQualifierId(),
-                        new DERSequence(policyDescriber.getQualifiers().toArray(new PolicyQualifierInfo[0]))));
+                policies.add(new PolicyInformation(new ASN1ObjectIdentifier(policyDescriber.getPolicyId()),
+                        new DERSequence(policyDescriber.getQualifiers()
+                                .stream()
+                                .map(qualifierDescriber -> new PolicyQualifierInfo(qualifierDescriber.getQualifier()))
+                                .toArray(PolicyQualifierInfo[]::new))));
             });
             certificateBuilder.addExtension(Extension.certificatePolicies, holder.isCritical(),
                     new CertificatePolicies(policies.toArray(new PolicyInformation[0])));
+
         } else {
             throw new ValidationException("Inappropriate holder received.");
         }

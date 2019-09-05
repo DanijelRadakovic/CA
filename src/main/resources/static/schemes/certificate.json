@@ -7,7 +7,13 @@
   "required": [
     "subjectDN",
     "issuerSN",
-    "type"
+    "basicConstraints",
+    "nameConstraints",
+    "authorityInfoAccess",
+    "certificatePolicies",
+    "keyUsage",
+    "extendedKeyUsage",
+    "subjectAlternativeNames"
   ],
   "properties": {
     "subjectDN": {
@@ -21,7 +27,7 @@
       "properties": {
         "commonName": {
           "$id": "#/properties/subjectDN/properties/commonName",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Common Name",
           "description": "Common name of subject",
           "default": "",
@@ -33,7 +39,7 @@
         },
         "surname": {
           "$id": "#/properties/subjectDN/properties/surname",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Surname",
           "description": "Surname of subject",
           "default": "",
@@ -44,7 +50,7 @@
         },
         "givenName": {
           "$id": "#/properties/subjectDN/properties/givenName",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Given Name",
           "description": "Given name of subject",
           "default": "",
@@ -55,29 +61,31 @@
         },
         "gender": {
           "$id": "#/properties/subjectDN/properties/commonName",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Common Name",
           "description": "Common name of subject",
           "default": "",
           "maxLength": 1,
           "examples": [
-            "M", "F"
+            "M",
+            "F"
           ]
         },
         "country": {
           "$id": "#/properties/subjectDN/properties/country",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Country",
           "description": "Country of subject",
           "default": "",
           "maxLength": 2,
           "examples": [
-            "US", "UK"
+            "US",
+            "UK"
           ]
         },
         "email": {
           "$id": "#/properties/subjectDN/properties/email",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Email",
           "description": "Email of subject",
           "default": "",
@@ -88,7 +96,7 @@
         },
         "organization": {
           "$id": "#/properties/subjectDN/properties/organization",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Organization",
           "description": "Organization of subject",
           "default": "",
@@ -99,7 +107,7 @@
         },
         "organizationUnit": {
           "$id": "#/properties/subjectDN/properties/organizationUnit",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Organization Unit",
           "description": "Organization unit of subject",
           "default": "",
@@ -110,7 +118,7 @@
         },
         "placeOfBirth": {
           "$id": "#/properties/subjectDN/properties/placeOfBirth",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Place of Birth",
           "description": "Place of birth of subject",
           "default": "",
@@ -121,7 +129,7 @@
         },
         "street": {
           "$id": "#/properties/subjectDN/properties/street",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Street",
           "description": "Street of subject",
           "default": "",
@@ -132,7 +140,7 @@
         },
         "localityName": {
           "$id": "#/properties/subjectDN/properties/localityName",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Locality Name",
           "description": "Locality name of subject",
           "default": "",
@@ -143,7 +151,7 @@
         },
         "postalCode": {
           "$id": "#/properties/subjectDN/properties/postalCode",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Postal Code",
           "description": "Postal code of subject",
           "default": "",
@@ -154,25 +162,49 @@
         },
         "countryOfCitizenship": {
           "$id": "#/properties/subjectDN/properties/countryOfCitizenship",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Country Of Citizenship",
           "description": "Country Of citizenship of subject",
           "default": "",
           "maxLength": 2,
           "examples": [
-            "UK", "US"
+            "UK",
+            "US"
           ]
         },
         "countryOfResidence": {
           "$id": "#/properties/subjectDN/properties/countryOfResidence",
-          "type": "string",
+          "type": ["string", "null"],
           "title": "Country Of Residence",
           "description": "Country of residence of subject",
           "default": "",
           "maxLength": 2,
           "examples": [
-            "UK", "US"
+            "UK",
+            "US"
           ]
+        },
+        "initials": {
+          "$id": "#/properties/subjectDN/properties/initials",
+          "type": ["string", "null"],
+          "title": "Initials",
+          "description": "Initials of subject",
+          "default": ""
+        },
+        "title": {
+          "$id": "#/properties/subjectDN/properties/title",
+          "type": ["string", "null"],
+          "title": "Title",
+          "description": "Title of subject",
+          "default": ""
+        },
+        "pseudonym": {
+          "$id": "#/properties/subjectDN/properties/pseudonym",
+          "type": ["string", "null"],
+          "title": "Pseudonym",
+          "description": "Pseudonym of subject",
+          "default": "",
+          "maxLength": 64
         }
       }
     },
@@ -189,22 +221,353 @@
         "5648518654"
       ]
     },
-    "type": {
-      "$id": "#/properties/type",
-      "type": "string",
-      "title": "Type",
-      "description": "Certificate type",
-      "default": "ROOT",
-      "enum": [
-        "ROOT",
-        "INTERMEDIATE",
-        "CLIENT"
+    "basicConstraints": {
+      "$id": "#/properties/basicConstraints",
+      "type": [
+        "object",
+        "null"
       ],
-      "examples": [
-        "ROOT",
-        "INTERMEDIATE",
-        "CLIENT"
-      ]
+      "title": "Basic Constraints",
+      "description": "Basic Constraints certificate extension field",
+      "default": "",
+      "properties": {
+        "critical": {
+          "$id": "#/properties/basicConstraints/properties/critical",
+          "type": "boolean",
+          "title": "Critical",
+          "description": "Is field critical in certificate",
+          "default": "false"
+        },
+        "cA": {
+          "$id": "#/properties/basicConstraints/properties/cA",
+          "type": "boolean",
+          "title": "CA",
+          "description": "Is CA certificate",
+          "default": "false"
+        },
+        "pathLenConstraint": {
+          "$id": "#/properties/basicConstraints/properties/pathLenConstraint",
+          "type": "integer",
+          "title": "Path Length Constraint",
+          "description": "Depth of certificate chain",
+          "default": "0",
+          "examples": [
+            0,
+            1,
+            2
+          ]
+        }
+      }
+    },
+    "nameConstraints": {
+      "$id": "#/properties/nameConstraints",
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Name Constraints",
+      "description": "Name Constraints certificate extension field",
+      "default": "",
+      "properties": {
+        "critical": {
+          "$id": "#/properties/nameConstraints/properties/critical",
+          "type": "boolean",
+          "title": "Critical",
+          "description": "Is field critical in certificate",
+          "default": "false"
+        },
+        "permitted": {
+          "$id": "#/properties/nameConstraints/properties/permitted",
+          "type": "array",
+          "title": "Permitted",
+          "description": "Permitted subtrees",
+          "minItems": 0,
+          "items": {
+            "$id": "#/properties/nameConstraints/properties/permitted/items",
+            "type": "string",
+            "title": "Subtree item"
+          }
+        },
+        "excluded": {
+          "$id": "#/properties/nameConstraints/properties/excluded",
+          "type": "array",
+          "title": "Permitted",
+          "description": "Permitted subtrees",
+          "minItems": 0,
+          "items": {
+            "$id": "#/properties/nameConstraints/properties/excluded/items",
+            "type": "string",
+            "title": "Subtree item"
+          }
+        }
+      }
+    },
+    "authorityInfoAccess": {
+      "$id": "#/properties/authorityInfoAccess",
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Authority Information Access",
+      "description": "Authority Information Access certificate extension field",
+      "properties": {
+        "critical": {
+          "$id": "#/properties/authorityInfoAccess/properties/critical",
+          "type": "boolean",
+          "title": "Critical",
+          "description": "Is field critical in certificate",
+          "default": "false"
+        },
+        "accessDescriptions": {
+          "$id": "#/properties/authorityInfoAccess/properties/accessDescriptions",
+          "type": "array",
+          "title": "Access Descriptions",
+          "description": "Access Descriptions",
+          "minItems": 0,
+          "items": {
+            "$id": "#/properties/authorityInfoAccess/items",
+            "type": "object",
+            "title": "Access Description",
+            "properties": {
+              "accessMethod": {
+                "$id": "#/properties/authorityInfoAccess/properties/accessDescriptions/items/accessMethod",
+                "type": "string",
+                "title": "Location",
+                "description": "Location of resource",
+                "enum": [
+                  "CA_ISSUERS",
+                  "OCSP"
+                ]
+              },
+              "location": {
+                "$id": "#/properties/authorityInfoAccess/properties/accessDescriptions/items/location",
+                "type": "string",
+                "title": "Location",
+                "description": "Location of resource"
+              }
+            }
+          }
+        }
+      }
+    },
+    "certificatePolicies": {
+      "$id": "#/properties/certificatePolicies",
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Certificate Policies",
+      "description": "Certificate Policies certificate extension field",
+      "default": "",
+      "properties": {
+        "critical": {
+          "$id": "#/properties/certificatePolicies/properties/critical",
+          "type": "boolean",
+          "title": "Critical",
+          "description": "Is field critical in certificate",
+          "default": "false"
+        },
+        "policies": {
+          "$id": "#/properties/certificatePolicies/properties/policies",
+          "type": "array",
+          "title": "Policies",
+          "description": "Policies",
+          "minItems": 0,
+          "items": {
+            "$id": "#/properties/certificatePolicies/properties/policies/items",
+            "type": "object",
+            "title": "Policy item",
+            "properties": {
+              "policyId": {
+                "$id": "#/properties/certificatePolicies/properties/policies/items/properties/policyId",
+                "type": "string",
+                "title": "Policy ID",
+                "description": "Policy ID"
+              },
+              "qualifiers": {
+                "$id": "#/properties/certificatePolicies/properties/policies/items/properties/qualifiers",
+                "type": "array",
+                "title": "Policy Qualifiers",
+                "description": "Policy Qualifiers",
+                "items": {
+                  "$id": "#/properties/certificatePolicies/properties/policies/items/properties/qualifiers/items",
+                  "type": "object",
+                  "title": "Policy Qualifier item",
+                  "properties": {
+                    "qualifierId": {
+                      "$id": "#/properties/certificatePolicies/properties/policies/items/properties/qualifiers/items/properties/qualifierId",
+                      "type": "string",
+                      "title": "Policy Qualifier ID",
+                      "description": "Policy Qualifier ID",
+                      "enum": [
+                        "CPS",
+                        "USER_NOTICE"
+                      ]
+                    },
+                    "qualifier": {
+                      "$id": "#/properties/certificatePolicies/properties/policies/items/properties/qualifiers/items/properties/qualifier",
+                      "type": "string",
+                      "title": "Policy Qualifier ID",
+                      "description": "Policy Qualifier ID"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "keyUsage": {
+      "$id": "#/properties/keyUsage",
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Key Usage",
+      "description": "Key Usage certificate extension field",
+      "properties": {
+        "critical": {
+          "$id": "#/properties/keyUsage/properties/critical",
+          "type": "boolean",
+          "title": "Critical",
+          "description": "Is field critical in certificate",
+          "default": "false"
+        },
+        "digitalSignature": {
+          "$id": "#/properties/keyUsage/properties/digitalSignature",
+          "type": "boolean",
+          "title": "Digital Signature",
+          "description": "Digital Signature",
+          "default": "false"
+        },
+        "nonRepudiation": {
+          "$id": "#/properties/keyUsage/properties/nonRepudiation",
+          "type": "boolean",
+          "title": "Non-Repudiation",
+          "description": "Non-Repudiation",
+          "default": "false"
+        },
+        "keyEncipherment": {
+          "$id": "#/properties/keyUsage/properties/keyEncipherment",
+          "type": "boolean",
+          "title": "Key Encipherment",
+          "description": "Key Encipherment",
+          "default": "false"
+        },
+        "dataEncipherment": {
+          "$id": "#/properties/keyUsage/properties/dataEncipherment",
+          "type": "boolean",
+          "title": "Data Encipherment",
+          "description": "Data Encipherment",
+          "default": "false"
+        },
+        "keyAgreement": {
+          "$id": "#/properties/keyUsage/properties/keyAgreement",
+          "type": "boolean",
+          "title": "Key Agreement",
+          "description": "Key Agreement",
+          "default": "false"
+        },
+        "keyCertSign": {
+          "$id": "#/properties/keyUsage/properties/keyCertSign",
+          "type": "boolean",
+          "title": "Key Cert Sign",
+          "description": "Key Cert Sign",
+          "default": "false"
+        },
+        "cRLSign": {
+          "$id": "#/properties/keyUsage/properties/cRLSign",
+          "type": "boolean",
+          "title": "CRL Sign",
+          "description": "CRL Sign",
+          "default": "false"
+        },
+        "encipherOnly": {
+          "$id": "#/properties/keyUsage/properties/encipherOnly",
+          "type": "boolean",
+          "title": "Encipher Only",
+          "description": "Encipher Only",
+          "default": "false"
+        },
+        "decipherOnly": {
+          "$id": "#/properties/keyUsage/properties/decipherOnly",
+          "type": "boolean",
+          "title": "Decipher Only",
+          "description": "Decipher Only",
+          "default": "false"
+        }
+      }
+    },
+    "extendedKeyUsage": {
+      "$id": "#/properties/extendedKeyUsage",
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Extended Key Usage",
+      "description": "Extended Key Usage certificate extension field",
+      "default": "",
+      "properties": {
+        "critical": {
+          "$id": "#/properties/extendedKeyUsage/properties/critical",
+          "type": "boolean",
+          "title": "Critical",
+          "description": "Is field critical in certificate",
+          "default": "false"
+        },
+        "keyPurpose": {
+          "$id": "#/properties/extendedKeyUsage/properties/permitted",
+          "type": "array",
+          "title": "Key Purpose",
+          "description": "Key Purpose",
+          "minItems": 0,
+          "items": {
+            "$id": "#/properties/extendedKeyUsage/properties/keyPurpose/items",
+            "type": "string",
+            "title": "Key Purpose item",
+            "enum": [
+              "SERVER_AUTH",
+              "CLIENT_AUTH",
+              "CODE_SIGNING",
+              "EMAIL_PROTECTION",
+              "TIME_STAMPING",
+              "OCSP_SIGNING"
+            ]
+          }
+        }
+      }
+    },
+    "subjectAlternativeNames": {
+      "$id": "#/properties/subjectAlternativeNames",
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Subject Alternative Names",
+      "description": "Subject Alternative Names certificate extension field",
+      "default": "",
+      "properties": {
+        "critical": {
+          "$id": "#/properties/subjectAlternativeNames/properties/critical",
+          "type": "boolean",
+          "title": "Critical",
+          "description": "Is field critical in certificate",
+          "default": "false"
+        },
+        "altNames": {
+          "$id": "#/properties/subjectAlternativeNames/properties/altNames",
+          "type": "array",
+          "title": "Alternative Name",
+          "description": "Alternative Name",
+          "minItems": 0,
+          "items": {
+            "$id": "#/properties/extendedKeyUsage/properties/altNames/items",
+            "type": "string",
+            "title": "Alternative Name item"
+          }
+        }
+      }
     }
   }
 }

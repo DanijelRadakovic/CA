@@ -7,14 +7,13 @@ import java.util.Map;
 
 public class CertificatePoliciesDTO {
     private boolean critical;
-    private Map<PolicyQualifierId, List<String>> policies;
+    private List<CertificatePolicyDTO> policies;
 
     public CertificatePoliciesDTO() {
     }
 
     public CertificatePoliciesDTO(boolean critical, Map<PolicyQualifierId, List<String>> policies) {
         this.critical = critical;
-        this.policies = policies;
     }
 
     public boolean isCritical() {
@@ -25,11 +24,11 @@ public class CertificatePoliciesDTO {
         this.critical = critical;
     }
 
-    public Map<PolicyQualifierId, List<String>> getPolicies() {
+    public List<CertificatePolicyDTO> getPolicies() {
         return policies;
     }
 
-    public void setPolicies(Map<PolicyQualifierId, List<String>> policies) {
+    public void setPolicies(List<CertificatePolicyDTO> policies) {
         this.policies = policies;
     }
 }

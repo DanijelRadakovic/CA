@@ -1,35 +1,34 @@
 package megatravel.com.pki.generator.helper;
 
-import org.bouncycastle.asn1.x509.PolicyQualifierId;
-
 import java.util.List;
 
 public class PolicyDescriber {
 
-    private PolicyQualifierId qualifierId;
-    private List<String> qualifiers;
+    private String policyId;
+    private List<PolicyQualifierDescriber> qualifiers;
+
 
     public PolicyDescriber() {
     }
 
-    public PolicyDescriber(PolicyQualifierId qualifierId, List<String> qualifiers) {
-        this.qualifierId = qualifierId;
+    public PolicyDescriber(String policyId, List<PolicyQualifierDescriber> qualifiers) {
+        this.policyId = policyId;
         this.qualifiers = qualifiers;
     }
 
-    public PolicyQualifierId getQualifierId() {
-        return qualifierId;
+    public String getPolicyId() {
+        return policyId;
     }
 
-    public void setQualifierId(PolicyQualifierId qualifierId) {
-        this.qualifierId = qualifierId;
+    public void setPolicyId(String policyId) {
+        this.policyId = policyId;
     }
 
-    public List<String> getQualifiers() {
+    public List<PolicyQualifierDescriber> getQualifiers() {
         return qualifiers;
     }
 
-    public void setQualifiers(List<String> qualifiers) {
+    public void setQualifiers(List<PolicyQualifierDescriber> qualifiers) {
         this.qualifiers = qualifiers;
     }
 }

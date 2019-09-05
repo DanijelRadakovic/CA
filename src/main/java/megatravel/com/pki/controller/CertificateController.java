@@ -3,6 +3,7 @@ package megatravel.com.pki.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import megatravel.com.pki.converter.CertificateConverter;
 import megatravel.com.pki.domain.DTO.cer.CertificateDTO;
+import megatravel.com.pki.domain.DTO.cer.CertificateDistributionDTO;
 import megatravel.com.pki.domain.DTO.cer.CertificateRequestDTO;
 import megatravel.com.pki.service.CertificateService;
 import megatravel.com.pki.util.ValidationException;
@@ -105,13 +106,13 @@ public class CertificateController extends ValidationController {
     /**
      * POST /api/cer
      *
-     * @param request that needs to be processed
+     * @param request that contains certificate data
      * @return message about action results
      */
     @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE)
     //@PreAuthorize("hasAuthority('SECADMIN')")
     public ResponseEntity<String> save(@RequestBody String request) throws IOException, ValidationException {
-        //validateJSON(request, "certificate.json");
+        validateJSON(request, "certificate.json");
         CertificateRequestDTO cer = new ObjectMapper().readValue(request, CertificateRequestDTO.class);
         try {
             X500Name name = CertificateConverter.toX500Name(cer.getSubjectDN(), cer.getBasicConstraints().iscA());
@@ -136,5 +137,21 @@ public class CertificateController extends ValidationController {
         certificateService.remove(Long.parseLong(id));
         logger.info("action=removeCert certId={} status=success", id);
         return new ResponseEntity<>("Certificate successfully deleted.", HttpStatus.OK);
+    }
+
+    /**
+     * POST /api/cer/dist
+     *
+     * @param request that contains distribution data
+     * @return message about action results
+     */
+    @PostMapping(value = "/dist",produces = MediaType.TEXT_PLAIN_VALUE)
+    //@PreAuthorize("hasAuthority('SECADMIN')")
+    public ResponseEntity<String> distribute(@RequestBody String request) throws IOException, ValidationException {
+        validateJSON(request, "distribution.json");
+        CertificateDistributionDTO cert = new ObjectMapper().readValue(request, CertificateDistributionDTO.class);
+        certificateService.distribute(CertificateConverter.toEntity(cert));
+        logger.info("action=distributeCert serialNumber={} status=success", cert.getSerialNumber());
+        return new ResponseEntity<>("Certificate successfully distributed.", HttpStatus.OK);
     }
 }

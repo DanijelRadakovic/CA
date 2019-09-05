@@ -13,6 +13,9 @@ import net.schmizz.sshj.signature.SignatureECDSA;
 import net.schmizz.sshj.signature.SignatureRSA;
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
 import net.schmizz.sshj.xfer.FileSystemFile;
+import org.bouncycastle.asn1.ASN1OctetString;
+import org.bouncycastle.asn1.x509.BasicConstraints;
+import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,12 +57,13 @@ public class CertificateStorage {
         }
     }
 
-    public void sendToCertificateRepository(String serialNumber, String hostname, String destination, CerType cerType) {
+    public void sendToCertificateRepository(String serialNumber, String hostname, String destination) {
         new Thread(() -> {
-            String keystorePath = createTempKeystore(getCertificateChain(serialNumber, true));
+            CerChanPrivateKey chanPrivateKey = getCertificateChain(serialNumber, true);
+            String keystorePath = createTempKeystore(chanPrivateKey);
             try {
                 send(hostname, keystorePath, destination);
-                if (cerType == CerType.END_ENTITY) {
+                if (getCerType((X509Certificate)chanPrivateKey.getChain()[0]) == CerType.END_ENTITY) {
                     removeEndEntityCertificate(serialNumber);
                 }
             } catch (IOException e) {
@@ -70,6 +74,9 @@ public class CertificateStorage {
     }
 
     public IssuerData findCAbySerialNumber(String serialNumber) {
+        if (serialNumber == null) {
+            return null;
+        }
         char[] password = config.getKeystorePassword().toCharArray();
         try {
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
@@ -183,6 +190,17 @@ public class CertificateStorage {
         } catch (KeyStoreException | IOException | NoSuchAlgorithmException |
                 CertificateException e) {
             throw new GeneralException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private CerType getCerType(X509Certificate certificate) {
+        byte[] extensionValue = certificate.getExtensionValue(Extension.basicConstraints.getId());
+        ASN1OctetString bcOc = ASN1OctetString.getInstance(extensionValue);
+        BasicConstraints bc = BasicConstraints.getInstance(bcOc.getOctets());
+        if (bc.isCA()) {
+            return CerType.CA;
+        } else {
+            return CerType.END_ENTITY;
         }
     }
 

@@ -6,9 +6,6 @@
   "title": "Distribution",
   "required": [
     "serialNumber",
-    "privateKey",
-    "keystore",
-    "truststore",
     "hostname",
     "destination"
   ],
@@ -22,27 +19,6 @@
       "examples": [
         "159846512"
       ]
-    },
-    "privateKey": {
-      "$id": "#/properties/privateKey",
-      "type": "boolean",
-      "title": "Private Key",
-      "description": "Privet key of certificate",
-      "default": "false"
-    },
-    "keystore": {
-      "$id": "#/properties/keystore",
-      "type": "boolean",
-      "title": "Key Store",
-      "description": "Key store of certificate",
-      "default": "false"
-    },
-    "truststore": {
-      "$id": "#/properties/truststore",
-      "type": "boolean",
-      "title": "Trust Store",
-      "description": "Trust Store of certificate",
-      "default": "false"
     },
     "hostname": {
       "$id": "#/properties/hostname",

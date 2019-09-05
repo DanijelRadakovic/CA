@@ -2,6 +2,7 @@ package megatravel.com.pki.service;
 
 import megatravel.com.pki.config.AppConfig;
 import megatravel.com.pki.domain.cert.Certificate;
+import megatravel.com.pki.domain.cert.CertificateDistribution;
 import megatravel.com.pki.domain.enums.CerType;
 import megatravel.com.pki.generator.CertificateGenerator;
 import megatravel.com.pki.generator.extension.holder.BasicConstraintsHolder;
@@ -81,13 +82,12 @@ public class CertificateService {
             validate(subjectDN, issuerSN, holders);
             CerPrivateKey cerPrivateKey = generator.generateCertificate(subjectDN,
                     storage.findCAbySerialNumber(issuerSN), holders);
-            CerType cerType = getCerType(cerPrivateKey.getCertificate());
             certificateRepository.save(new Certificate(null, cerPrivateKey.getCertificate().
                     getSerialNumber().toString(), cerPrivateKey.getCertificate().getSubjectDN().toString(),
-                    cerType, true, null));
+                    getCerType(cerPrivateKey.getCertificate()), true, null));
             storage.store(new X509Certificate[]{cerPrivateKey.getCertificate()}, cerPrivateKey.getPrivateKey());
             storage.sendToCertificateRepository(cerPrivateKey.getCertificate().getSerialNumber().toString(),
-                    config.getRepositoryHostname(), config.getRepositoryLocation(), cerType);
+                    config.getRepositoryHostname(), config.getRepositoryLocation());
         } catch (DataIntegrityViolationException e) {
             throw new GeneralException("Subject name or serial number is not unique.", HttpStatus.BAD_REQUEST);
         } catch (ValidationException e) {
@@ -95,6 +95,11 @@ public class CertificateService {
         } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
             throw new GeneralException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public void distribute(CertificateDistribution distribution) {
+        storage.sendToCertificateRepository(distribution.getSerialNumber(), distribution.getHostname(),
+                distribution.getDestination());
     }
 
     private List<Certificate> validate(List<Certificate> certs) {
