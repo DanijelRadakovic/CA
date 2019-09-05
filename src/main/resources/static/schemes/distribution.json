@@ -1,0 +1,68 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "Distribution",
+  "required": [
+    "serialNumber",
+    "privateKey",
+    "keystore",
+    "truststore",
+    "hostname",
+    "destination"
+  ],
+  "properties": {
+    "serialNumber": {
+      "$id": "#/properties/serialNumber",
+      "type": "string",
+      "title": "Serial Number",
+      "description": "Serial number of certificate",
+      "default": "",
+      "examples": [
+        "159846512"
+      ]
+    },
+    "privateKey": {
+      "$id": "#/properties/privateKey",
+      "type": "boolean",
+      "title": "Private Key",
+      "description": "Privet key of certificate",
+      "default": "false"
+    },
+    "keystore": {
+      "$id": "#/properties/keystore",
+      "type": "boolean",
+      "title": "Key Store",
+      "description": "Key store of certificate",
+      "default": "false"
+    },
+    "truststore": {
+      "$id": "#/properties/truststore",
+      "type": "boolean",
+      "title": "Trust Store",
+      "description": "Trust Store of certificate",
+      "default": "false"
+    },
+    "hostname": {
+      "$id": "#/properties/hostname",
+      "type": "string",
+      "title": "Hostname",
+      "description": "Hostname of destination server",
+      "default": "",
+      "examples": [
+        "https://localhost:8080"
+      ]
+    },
+    "destination": {
+      "$id": "#/properties/destination",
+      "type": "string",
+      "title": "Destination",
+      "description": "File destination",
+      "default": "",
+      "examples": [
+        "/tmp"
+      ]
+    }
+  }
+}

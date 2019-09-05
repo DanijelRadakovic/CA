@@ -1,0 +1,210 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "Certificate",
+  "required": [
+    "subjectDN",
+    "issuerSN",
+    "type"
+  ],
+  "properties": {
+    "subjectDN": {
+      "$id": "#/properties/subjectDN",
+      "type": "object",
+      "title": "Subject DN",
+      "description": "Subject DN",
+      "required": [
+        "commonName"
+      ],
+      "properties": {
+        "commonName": {
+          "$id": "#/properties/subjectDN/properties/commonName",
+          "type": "string",
+          "title": "Common Name",
+          "description": "Common name of subject",
+          "default": "",
+          "minLength": 1,
+          "maxLength": 64,
+          "examples": [
+            "mail account"
+          ]
+        },
+        "surname": {
+          "$id": "#/properties/subjectDN/properties/surname",
+          "type": "string",
+          "title": "Surname",
+          "description": "Surname of subject",
+          "default": "",
+          "maxLength": 64,
+          "examples": [
+            "Taylor"
+          ]
+        },
+        "givenName": {
+          "$id": "#/properties/subjectDN/properties/givenName",
+          "type": "string",
+          "title": "Given Name",
+          "description": "Given name of subject",
+          "default": "",
+          "maxLength": 64,
+          "examples": [
+            "John"
+          ]
+        },
+        "gender": {
+          "$id": "#/properties/subjectDN/properties/commonName",
+          "type": "string",
+          "title": "Common Name",
+          "description": "Common name of subject",
+          "default": "",
+          "maxLength": 1,
+          "examples": [
+            "M", "F"
+          ]
+        },
+        "country": {
+          "$id": "#/properties/subjectDN/properties/country",
+          "type": "string",
+          "title": "Country",
+          "description": "Country of subject",
+          "default": "",
+          "maxLength": 2,
+          "examples": [
+            "US", "UK"
+          ]
+        },
+        "email": {
+          "$id": "#/properties/subjectDN/properties/email",
+          "type": "string",
+          "title": "Email",
+          "description": "Email of subject",
+          "default": "",
+          "maxLength": 64,
+          "examples": [
+            "temp@megatravel.com"
+          ]
+        },
+        "organization": {
+          "$id": "#/properties/subjectDN/properties/organization",
+          "type": "string",
+          "title": "Organization",
+          "description": "Organization of subject",
+          "default": "",
+          "maxLength": 64,
+          "examples": [
+            "Mega Travel"
+          ]
+        },
+        "organizationUnit": {
+          "$id": "#/properties/subjectDN/properties/organizationUnit",
+          "type": "string",
+          "title": "Organization Unit",
+          "description": "Organization unit of subject",
+          "default": "",
+          "maxLength": 64,
+          "examples": [
+            "Finance"
+          ]
+        },
+        "placeOfBirth": {
+          "$id": "#/properties/subjectDN/properties/placeOfBirth",
+          "type": "string",
+          "title": "Place of Birth",
+          "description": "Place of birth of subject",
+          "default": "",
+          "maxLength": 128,
+          "examples": [
+            "New York"
+          ]
+        },
+        "street": {
+          "$id": "#/properties/subjectDN/properties/street",
+          "type": "string",
+          "title": "Street",
+          "description": "Street of subject",
+          "default": "",
+          "maxLength": 64,
+          "examples": [
+            "Berkley 117"
+          ]
+        },
+        "localityName": {
+          "$id": "#/properties/subjectDN/properties/localityName",
+          "type": "string",
+          "title": "Locality Name",
+          "description": "Locality name of subject",
+          "default": "",
+          "maxLength": 64,
+          "examples": [
+            "New York"
+          ]
+        },
+        "postalCode": {
+          "$id": "#/properties/subjectDN/properties/postalCode",
+          "type": "string",
+          "title": "Postal Code",
+          "description": "Postal code of subject",
+          "default": "",
+          "maxLength": 40,
+          "examples": [
+            "11000"
+          ]
+        },
+        "countryOfCitizenship": {
+          "$id": "#/properties/subjectDN/properties/countryOfCitizenship",
+          "type": "string",
+          "title": "Country Of Citizenship",
+          "description": "Country Of citizenship of subject",
+          "default": "",
+          "maxLength": 2,
+          "examples": [
+            "UK", "US"
+          ]
+        },
+        "countryOfResidence": {
+          "$id": "#/properties/subjectDN/properties/countryOfResidence",
+          "type": "string",
+          "title": "Country Of Residence",
+          "description": "Country of residence of subject",
+          "default": "",
+          "maxLength": 2,
+          "examples": [
+            "UK", "US"
+          ]
+        }
+      }
+    },
+    "issuerSN": {
+      "$id": "#/properties/issuerSN",
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "Issuer Serial Number",
+      "description": "Issuer Serial Number",
+      "default": "",
+      "examples": [
+        "5648518654"
+      ]
+    },
+    "type": {
+      "$id": "#/properties/type",
+      "type": "string",
+      "title": "Type",
+      "description": "Certificate type",
+      "default": "ROOT",
+      "enum": [
+        "ROOT",
+        "INTERMEDIATE",
+        "CLIENT"
+      ],
+      "examples": [
+        "ROOT",
+        "INTERMEDIATE",
+        "CLIENT"
+      ]
+    }
+  }
+}

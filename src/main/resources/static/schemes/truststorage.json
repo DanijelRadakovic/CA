@@ -1,0 +1,35 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "Trust Storage",
+  "required": [
+    "target",
+    "serialNumbers"
+  ],
+  "properties": {
+    "target": {
+      "$id": "#/properties/target",
+      "type": "string",
+      "title": "Target",
+      "description": "Target certificate",
+      "default": "",
+      "examples": [
+        "155868412"
+      ]
+    },
+    "serialNumbers": {
+      "$id": "#/properties/serialNumbers",
+      "type": "array",
+      "title": "Serial Numbers",
+      "description": "Serial numbers of trusted certificates",
+      "minItems": 0,
+      "items": {
+        "$id": "#/properties/serialNumbers/items",
+        "type": "string",
+        "title": "Serial number"
+      }
+    }
+  }
+}

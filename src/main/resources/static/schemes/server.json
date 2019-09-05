@@ -1,0 +1,67 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "Server",
+  "required": [
+    "id",
+    "name",
+    "address",
+    "type"
+  ],
+  "properties": {
+    "id": {
+      "$id": "#/properties/id",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "title": "Id",
+      "description": "Server id",
+      "default": 0,
+      "examples": [
+        1
+      ],
+      "minimum": 0,
+      "multipleOf": 1
+    },
+    "name": {
+      "$id": "#/properties/name",
+      "type": "string",
+      "title": "Name",
+      "description": "Server name",
+      "default": "",
+      "maxLength": 30,
+      "examples": [
+        "London Certificate Authority"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "address": {
+      "$id": "#/properties/address",
+      "type": "string",
+      "title": "Address",
+      "description": "Server address",
+      "default": "",
+      "examples": [
+        "https://localhost:8080"
+      ]
+    },
+    "type": {
+      "$id": "#/properties/type",
+      "type": "string",
+      "title": "Type",
+      "description": "Server type",
+      "default": "CA",
+      "enum": [
+        "CA",
+        "OCSP"
+      ],
+      "examples": [
+        "CA",
+        "OCSP"
+      ]
+    }
+  }
+}
