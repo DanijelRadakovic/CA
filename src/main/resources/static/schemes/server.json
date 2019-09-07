@@ -56,11 +56,10 @@
       "default": "CA",
       "enum": [
         "CA",
-        "OCSP"
-      ],
-      "examples": [
-        "CA",
-        "OCSP"
+        "OCSP",
+        "RBC",
+        "REPOSITORY",
+        "ARCHIVE"
       ]
     }
   }
