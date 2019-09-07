@@ -1,2 +1,2 @@
-# PKI
-Public Key Infrastructure
+# Certificate Auhtority
+CA component in Public Key Infrastructure
