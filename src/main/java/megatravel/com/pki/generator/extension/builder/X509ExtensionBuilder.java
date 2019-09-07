@@ -9,5 +9,6 @@ public interface X509ExtensionBuilder {
 
     void build(X509v3CertificateBuilder certificateBuilder, X509ExtensionHolder holder)
             throws ValidationException, CertIOException;
+
     String getMatchingHolder();
 }

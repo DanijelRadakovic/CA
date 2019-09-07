@@ -15,7 +15,7 @@ public class KeyUsageDTO {
     public KeyUsageDTO() {
     }
 
-    public KeyUsageDTO(boolean critical,boolean digitalSignature, boolean nonRepudiation, boolean keyEncipherment,
+    public KeyUsageDTO(boolean critical, boolean digitalSignature, boolean nonRepudiation, boolean keyEncipherment,
                        boolean dataEncipherment, boolean keyAgreement, boolean keyCertSign, boolean cRLSign, boolean encipherOnly, boolean decipherOnly) {
         this.critical = critical;
         this.digitalSignature = digitalSignature;

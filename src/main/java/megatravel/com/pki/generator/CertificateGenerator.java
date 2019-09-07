@@ -51,7 +51,7 @@ public class CertificateGenerator {
         this.extensionBuilders = ExtensionBuilderFactory.getAllExtensions();
     }
 
-    public CerPrivateKey generateCertificate(X500Name subjectDN, IssuerData issuer, ExtensionHolders holders)
+    public CerPrivateKey generateCertificate(X500Name subjectDN, IssuerData issuerData, ExtensionHolders holders)
             throws NoSuchProviderException, NoSuchAlgorithmException {
         KeyPair keyPair;
         SubjectData subject;
@@ -61,21 +61,21 @@ public class CertificateGenerator {
         filterExtensionBuilders(holders);
 
         try {
-            if (issuer == null) { // Self-signed certificate
+            if (issuerData == null) { // Self-signed certificate
                 keyPair = generateKeyPair(true);
                 subject = generateSubjectData(keyPair.getPublic(), subjectDN, true);
-                issuer = new IssuerData(keyPair.getPrivate(), subjectDN, subject.getPublicKey(),
+                issuerData = new IssuerData(keyPair.getPrivate(), subjectDN, subject.getPublicKey(),
                         subject.getSerialNumber());
-                return new CerPrivateKey(buildCertificate(subject, issuer, holders), keyPair.getPrivate());
+                return new CerPrivateKey(buildCertificate(subject, issuerData, holders), keyPair.getPrivate());
             } else if (((BasicConstraintsHolder) holders.getHolders() // Intermediate certificate
                     .get(BasicConstraintsHolder.class.getCanonicalName())).iscA()) {
                 keyPair = generateKeyPair(true);
                 subject = generateSubjectData(keyPair.getPublic(), subjectDN, true);
-                return new CerPrivateKey(buildCertificate(subject, issuer, holders), keyPair.getPrivate());
+                return new CerPrivateKey(buildCertificate(subject, issuerData, holders), keyPair.getPrivate());
             } else { // End-entity certificate
                 keyPair = generateKeyPair(false);
                 subject = generateSubjectData(keyPair.getPublic(), subjectDN, false);
-                return new CerPrivateKey(buildCertificate(subject, issuer, holders),
+                return new CerPrivateKey(buildCertificate(subject, issuerData, holders),
                         keyPair.getPrivate());
             }
         } catch (NullPointerException e) {
@@ -135,7 +135,8 @@ public class CertificateGenerator {
         try {
             ContentSigner contentSigner = new JcaContentSignerBuilder(
                     config.getSignatureAlgorithm())
-                    .setProvider(config.getProvider()).build(issuerData.getPrivateKey());
+                    .setProvider(config.getProvider())
+                    .build(issuerData.getPrivateKey());
 
             X509v3CertificateBuilder certBuilder = new JcaX509v3CertificateBuilder(issuerData.getX500name(),
                     subjectData.getSerialNumber(),

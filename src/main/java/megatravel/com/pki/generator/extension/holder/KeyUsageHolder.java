@@ -68,7 +68,7 @@ public class KeyUsageHolder extends X509ExtensionHolder {
 
         if (activeFields.isEmpty()) {
             throw new ValidationException("Key Usage field must be set!");
-        } else if (activeFields.size() == 1){
+        } else if (activeFields.size() == 1) {
             return MAPPER.get(activeFields.get(0));
         } else {
             int result = MAPPER.get(activeFields.get(0));

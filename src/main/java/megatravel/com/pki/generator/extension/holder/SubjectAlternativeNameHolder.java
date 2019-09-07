@@ -14,7 +14,7 @@ public class SubjectAlternativeNameHolder extends X509ExtensionHolder {
         this.alternativeNames = new ArrayList<>();
     }
 
-    public SubjectAlternativeNameHolder(boolean critical,List<String> alternativeNames) {
+    public SubjectAlternativeNameHolder(boolean critical, List<String> alternativeNames) {
         this.name = "Subject Alternative Name";
         this.ASN1ObjectIdentifier = "2.5.29.17";
         this.critical = critical;

@@ -4,6 +4,7 @@ import megatravel.com.pki.config.AppConfig;
 import megatravel.com.pki.domain.cert.Certificate;
 import megatravel.com.pki.domain.cert.CertificateDistribution;
 import megatravel.com.pki.domain.enums.CerType;
+import megatravel.com.pki.domain.enums.RevokeReason;
 import megatravel.com.pki.generator.CertificateGenerator;
 import megatravel.com.pki.generator.extension.holder.BasicConstraintsHolder;
 import megatravel.com.pki.generator.extension.holder.ExtensionHolders;
@@ -38,55 +39,57 @@ public class CertificateService {
     private AppConfig config;
 
     @Autowired
-    private CertificateStorage storage;
+    private CertificateRepository repository;
 
     @Autowired
-    private CertificateRepository certificateRepository;
+    private CertificateStorage certificateStorage;
 
     @Autowired
     private CertificateGenerator generator;
 
     public List<Certificate> findAll() {
-        return validate(certificateRepository.findAll());
+        return validate(certificateStorage.findAll());
     }
 
     public List<Certificate> findAllCA() {
-        return validate(certificateRepository.findAllCA());
+        return validate(certificateStorage.findAllCA());
     }
 
     public List<Certificate> findAllActive() {
-        return validate(certificateRepository.findAllActive());
+        return validate(certificateStorage.findAllActive());
     }
 
     public List<Certificate> findAllActiveCA() {
-        return validate(certificateRepository.findAllActiveCA());
+        return validate(certificateStorage.findAllActiveCA());
     }
 
     public List<Certificate> findAllClients() {
-        return validate(certificateRepository.findAllClients());
+        return validate(certificateStorage.findAllClients());
     }
 
     public List<Certificate> findAllActiveClients() {
-        return validate(certificateRepository.findAllActiveClients());
+        return validate(certificateStorage.findAllActiveClients());
     }
 
-    public void remove(Long id) {
-        Certificate cert = certificateRepository.findById(id).orElseThrow(() ->
+    public void remove(Long id, RevokeReason revokeReason) {
+        Certificate cert = certificateStorage.findById(id).orElseThrow(() ->
                 new GeneralException("Certificate with id: " + id + ".", HttpStatus.BAD_REQUEST));
         cert.setActive(false);
-        certificateRepository.save(cert);
+        cert.setRevokeReason(revokeReason);
+        certificateStorage.save(cert);
+        repository.removeCertificate(cert.getSerialNumber());
     }
 
     public void save(X500Name subjectDN, String issuerSN, ExtensionHolders holders) {
         try {
             validate(subjectDN, issuerSN, holders);
             CerPrivateKey cerPrivateKey = generator.generateCertificate(subjectDN,
-                    storage.findCAbySerialNumber(issuerSN), holders);
-            certificateRepository.save(new Certificate(null, cerPrivateKey.getCertificate().
+                    repository.findCAbySerialNumber(issuerSN), holders);
+            certificateStorage.save(new Certificate(null, cerPrivateKey.getCertificate().
                     getSerialNumber().toString(), cerPrivateKey.getCertificate().getSubjectDN().toString(),
                     getCerType(cerPrivateKey.getCertificate()), true, null));
-            storage.store(new X509Certificate[]{cerPrivateKey.getCertificate()}, cerPrivateKey.getPrivateKey());
-            storage.sendToCertificateRepository(cerPrivateKey.getCertificate().getSerialNumber().toString(),
+            repository.store(new X509Certificate[]{cerPrivateKey.getCertificate()}, cerPrivateKey.getPrivateKey());
+            repository.sendToCertificateRepository(cerPrivateKey.getCertificate().getSerialNumber().toString(),
                     config.getRepositoryHostname(), config.getRepositoryLocation());
         } catch (DataIntegrityViolationException e) {
             throw new GeneralException("Subject name or serial number is not unique.", HttpStatus.BAD_REQUEST);
@@ -98,7 +101,7 @@ public class CertificateService {
     }
 
     public void distribute(CertificateDistribution distribution) {
-        storage.sendToCertificateRepository(distribution.getSerialNumber(), distribution.getHostname(),
+        repository.sendToCertificateRepository(distribution.getSerialNumber(), distribution.getHostname(),
                 distribution.getDestination());
     }
 
@@ -107,7 +110,7 @@ public class CertificateService {
         List<Certificate> invalid = new ArrayList<>(certs.size());
         java.security.cert.Certificate[] chain;
         for (Certificate cert : certs) {
-            chain = storage.getCertificateChain(cert.getSerialNumber(), false).getChain();
+            chain = repository.getCertificateChain(cert.getSerialNumber(), false).getChain();
             try {
                 ((X509Certificate) chain[0]).checkValidity();
                 result.add(cert);
@@ -116,7 +119,7 @@ public class CertificateService {
                 invalid.add(cert);
             }
         }
-        certificateRepository.saveAll(invalid);
+        certificateStorage.saveAll(invalid);
         return result;
     }
 

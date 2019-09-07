@@ -4,10 +4,12 @@ import megatravel.com.pki.generator.extension.holder.CertificatePoliciesHolder;
 import megatravel.com.pki.generator.extension.holder.X509ExtensionHolder;
 import megatravel.com.pki.util.GeneralNameValidator;
 import megatravel.com.pki.util.ValidationException;
-import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.x509.*;
+import org.bouncycastle.asn1.x509.CertificatePolicies;
+import org.bouncycastle.asn1.x509.Extension;
+import org.bouncycastle.asn1.x509.PolicyInformation;
+import org.bouncycastle.asn1.x509.PolicyQualifierInfo;
 import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 

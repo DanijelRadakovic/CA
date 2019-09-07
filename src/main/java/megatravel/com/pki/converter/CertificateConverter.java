@@ -114,7 +114,7 @@ public class CertificateConverter extends AbstractConverter {
                                                     .stream()
                                                     .map(policyQualifier ->
                                                             new PolicyQualifierDescriber(policyQualifier
-                                                            .getQualifierId().getQualifierId(),
+                                                                    .getQualifierId().getQualifierId(),
                                                                     policyQualifier.getQualifier()))
                                                     .collect(Collectors.toList())))
                             .collect(Collectors.toList()))

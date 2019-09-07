@@ -27,7 +27,10 @@
       "properties": {
         "commonName": {
           "$id": "#/properties/subjectDN/properties/commonName",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Common Name",
           "description": "Common name of subject",
           "default": "",
@@ -39,7 +42,10 @@
         },
         "surname": {
           "$id": "#/properties/subjectDN/properties/surname",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Surname",
           "description": "Surname of subject",
           "default": "",
@@ -50,7 +56,10 @@
         },
         "givenName": {
           "$id": "#/properties/subjectDN/properties/givenName",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Given Name",
           "description": "Given name of subject",
           "default": "",
@@ -61,7 +70,10 @@
         },
         "gender": {
           "$id": "#/properties/subjectDN/properties/commonName",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Common Name",
           "description": "Common name of subject",
           "default": "",
@@ -73,7 +85,10 @@
         },
         "country": {
           "$id": "#/properties/subjectDN/properties/country",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Country",
           "description": "Country of subject",
           "default": "",
@@ -85,7 +100,10 @@
         },
         "email": {
           "$id": "#/properties/subjectDN/properties/email",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Email",
           "description": "Email of subject",
           "default": "",
@@ -96,7 +114,10 @@
         },
         "organization": {
           "$id": "#/properties/subjectDN/properties/organization",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Organization",
           "description": "Organization of subject",
           "default": "",
@@ -107,7 +128,10 @@
         },
         "organizationUnit": {
           "$id": "#/properties/subjectDN/properties/organizationUnit",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Organization Unit",
           "description": "Organization unit of subject",
           "default": "",
@@ -118,7 +142,10 @@
         },
         "placeOfBirth": {
           "$id": "#/properties/subjectDN/properties/placeOfBirth",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Place of Birth",
           "description": "Place of birth of subject",
           "default": "",
@@ -129,7 +156,10 @@
         },
         "street": {
           "$id": "#/properties/subjectDN/properties/street",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Street",
           "description": "Street of subject",
           "default": "",
@@ -140,7 +170,10 @@
         },
         "localityName": {
           "$id": "#/properties/subjectDN/properties/localityName",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Locality Name",
           "description": "Locality name of subject",
           "default": "",
@@ -151,7 +184,10 @@
         },
         "postalCode": {
           "$id": "#/properties/subjectDN/properties/postalCode",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Postal Code",
           "description": "Postal code of subject",
           "default": "",
@@ -162,7 +198,10 @@
         },
         "countryOfCitizenship": {
           "$id": "#/properties/subjectDN/properties/countryOfCitizenship",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Country Of Citizenship",
           "description": "Country Of citizenship of subject",
           "default": "",
@@ -174,7 +213,10 @@
         },
         "countryOfResidence": {
           "$id": "#/properties/subjectDN/properties/countryOfResidence",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Country Of Residence",
           "description": "Country of residence of subject",
           "default": "",
@@ -186,21 +228,30 @@
         },
         "initials": {
           "$id": "#/properties/subjectDN/properties/initials",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Initials",
           "description": "Initials of subject",
           "default": ""
         },
         "title": {
           "$id": "#/properties/subjectDN/properties/title",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Title",
           "description": "Title of subject",
           "default": ""
         },
         "pseudonym": {
           "$id": "#/properties/subjectDN/properties/pseudonym",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Pseudonym",
           "description": "Pseudonym of subject",
           "default": "",

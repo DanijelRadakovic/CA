@@ -11,7 +11,7 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipUtils {
 
-    private List <String> fileList;
+    private List<String> fileList;
     private String sourceFolder;
 
     public ZipUtils() {
@@ -30,13 +30,13 @@ public class ZipUtils {
 
             FileInputStream in = null;
 
-            for (String file: this.fileList) {
+            for (String file : this.fileList) {
                 ZipEntry ze = new ZipEntry(source + File.separator + file);
                 zos.putNextEntry(ze);
                 try {
                     in = new FileInputStream(sourceFolder + File.separator + file);
                     int len;
-                    while ((len = in .read(buffer)) > 0) {
+                    while ((len = in.read(buffer)) > 0) {
                         zos.write(buffer, 0, len);
                     }
                 } finally {
@@ -57,6 +57,7 @@ public class ZipUtils {
     /**
      * Traverse a directory and get all files,
      * and add the file into fileList
+     *
      * @param node file or directory
      */
     public void generateFileList(File node) {
@@ -70,7 +71,7 @@ public class ZipUtils {
         if (node.isDirectory()) {
             String[] subNote = node.list();
             if (subNote != null) {
-                for (String filename: subNote) {
+                for (String filename : subNote) {
                     generateFileList(new File(node, filename));
                 }
             }
@@ -79,10 +80,11 @@ public class ZipUtils {
 
     /**
      * Format the file path for zip
+     *
      * @param file file path
      * @return Formatted file path
      */
-    private String generateZipEntry(String file){
-        return file.substring(sourceFolder.length()+1);
+    private String generateZipEntry(String file) {
+        return file.substring(sourceFolder.length() + 1);
     }
 }

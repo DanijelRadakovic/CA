@@ -5,6 +5,7 @@ import megatravel.com.pki.converter.CertificateConverter;
 import megatravel.com.pki.domain.DTO.cer.CertificateDTO;
 import megatravel.com.pki.domain.DTO.cer.CertificateDistributionDTO;
 import megatravel.com.pki.domain.DTO.cer.CertificateRequestDTO;
+import megatravel.com.pki.domain.enums.RevokeReason;
 import megatravel.com.pki.service.CertificateService;
 import megatravel.com.pki.util.ValidationException;
 import org.bouncycastle.asn1.x500.X500Name;
@@ -35,7 +36,6 @@ public class CertificateController extends ValidationController {
      * @return all available certificates
      */
     @GetMapping
-//    @PreAuthorize("hasAuthority('GENCERT')")
     public ResponseEntity<List<CertificateDTO>> getAll() {
         logger.info("action=getAllCertificates status=success");
         return new ResponseEntity<>(CertificateConverter.fromEntityList(certificateService.findAll(),
@@ -48,7 +48,6 @@ public class CertificateController extends ValidationController {
      * @return all available active certificates
      */
     @GetMapping("/active")
-//    @PreAuthorize("hasAuthority('GENCERT')")
     public ResponseEntity<List<CertificateDTO>> getAllActive() {
         logger.info("action=getAllActiveCertificates status=success");
         return new ResponseEntity<>(CertificateConverter.fromEntityList(certificateService.findAllActive(),
@@ -110,7 +109,6 @@ public class CertificateController extends ValidationController {
      * @return message about action results
      */
     @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE)
-    //@PreAuthorize("hasAuthority('SECADMIN')")
     public ResponseEntity<String> save(@RequestBody String request) throws IOException, ValidationException {
         validateJSON(request, "certificate.json");
         CertificateRequestDTO cer = new ObjectMapper().readValue(request, CertificateRequestDTO.class);
@@ -127,14 +125,15 @@ public class CertificateController extends ValidationController {
     }
 
     /**
-     * DELETE /api/cer/{id}
+     * DELETE /api/cer/{id}/{reason}
      *
-     * @param id of certificate that needs to be deleted
+     * @param id     of certificate that needs to be deleted
+     * @param reason for certificate revocation
      * @return message about action results
      */
-    @DeleteMapping(value = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> delete(@PathVariable String id) {
-        certificateService.remove(Long.parseLong(id));
+    @DeleteMapping(value = "/{id}/{reason}", produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> delete(@PathVariable String id, @PathVariable String reason) {
+        certificateService.remove(Long.parseLong(id), RevokeReason.valueOf(reason.toUpperCase()));
         logger.info("action=removeCert certId={} status=success", id);
         return new ResponseEntity<>("Certificate successfully deleted.", HttpStatus.OK);
     }
@@ -145,8 +144,7 @@ public class CertificateController extends ValidationController {
      * @param request that contains distribution data
      * @return message about action results
      */
-    @PostMapping(value = "/dist",produces = MediaType.TEXT_PLAIN_VALUE)
-    //@PreAuthorize("hasAuthority('SECADMIN')")
+    @PostMapping(value = "/dist", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> distribute(@RequestBody String request) throws IOException, ValidationException {
         validateJSON(request, "distribution.json");
         CertificateDistributionDTO cert = new ObjectMapper().readValue(request, CertificateDistributionDTO.class);
