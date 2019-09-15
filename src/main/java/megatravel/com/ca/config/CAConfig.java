@@ -5,62 +5,53 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AppConfig {
-    @Value("${pki.keystore}")
+public class CAConfig {
+    @Value("${ca.keystore}")
     private String keystore;
 
-    @Value("${pki.keystore.password}")
+    @Value("${ca.keystore.password}")
     private String keystorePassword;
 
-    @Value("${pki.truststore.dir}")
-    private String truststore;
-
-    @Value("${pki.truststore.password}")
-    private String truststorePassword;
-
-    @Value("${pki.certificates.dir}")
-    private String certificates;
-
-    @Value("${pki.certificate.provider}")
+    @Value("${ca.gen.certificate.provider}")
     private String provider;
 
-    @Value("${pki.algorithm.signature}")
+    @Value("${ca.gen.algorithm.signature}")
     private String signatureAlgorithm;
 
-    @Value("${pki.algorithm.key}")
+    @Value("${ca.gen.algorithm.key}")
     private String keyAlgorithm;
 
-    @Value("${pki.seed.algorithm}")
+    @Value("${ca.gen.seed.algorithm}")
     private String seedAlgorithm;
 
-    @Value("${pki.seed.provider}")
+    @Value("${ca.gen.seed.provider}")
     private String seedProvider;
 
-    @Value("${pki.serialnumbersize}")
+    @Value("${ca.gen.serialnumbersize}")
     private String serialNumberSize;
 
-    @Value("${pki.period.unit}")
+    @Value("${ca.gen.period.unit}")
     private String periodUnit;
 
-    @Value("${pki.endentity.keysize}")
-    private String endEntityKeysize;
+    @Value("${ca.gen.endentity.keysize}")
+    private String endEntityKeySize;
 
-    @Value("${pki.endentity.period}")
+    @Value("${ca.gen.endentity.period}")
     private String endEntityPeriod;
 
-    @Value("${pki.ca.keysize}")
+    @Value("${ca.gen.ca.keysize}")
     private String caKeySize;
 
-    @Value("${pki.ca.period}")
+    @Value("${ca.gen.ca.period}")
     private String caPeriod;
 
-    @Value("${pki.sftp.username}")
+    @Value("${ca.sftp.username}")
     private String sftpUsername;
 
-    @Value("${pki.sftp.repo.location}")
+    @Value("${ca.sftp.repo.location}")
     private String repositoryLocation;
 
-    @Value("${pki.sftp.repo.hostname}")
+    @Value("${ca.sftp.repo.hostname}")
     private String repositoryHostname;
 
     public String getKeystore() {
@@ -69,22 +60,6 @@ public class AppConfig {
 
     public void setKeystore(String keystore) {
         this.keystore = keystore;
-    }
-
-    public String getTruststore() {
-        return truststore;
-    }
-
-    public void setTruststore(String truststore) {
-        this.truststore = truststore;
-    }
-
-    public String getCertificates() {
-        return certificates;
-    }
-
-    public void setCertificates(String certificates) {
-        this.certificates = certificates;
     }
 
     public String getSignatureAlgorithm() {
@@ -127,12 +102,12 @@ public class AppConfig {
         this.periodUnit = periodUnit.toString();
     }
 
-    public int getEndEntityKeysize() {
-        return Integer.parseInt(endEntityKeysize);
+    public int getEndEntityKeySize() {
+        return Integer.parseInt(endEntityKeySize);
     }
 
-    public void setEndEntityKeysize(int endEntityKeysize) {
-        this.endEntityKeysize = endEntityKeysize + "";
+    public void setEndEntityKeySize(int endEntityKeySize) {
+        this.endEntityKeySize = endEntityKeySize + "";
     }
 
     public int getEndEntityPeriod() {
@@ -173,14 +148,6 @@ public class AppConfig {
 
     public void setKeystorePassword(String keystorePassword) {
         this.keystorePassword = keystorePassword;
-    }
-
-    public String getTruststorePassword() {
-        return truststorePassword;
-    }
-
-    public void setTruststorePassword(String truststorePassword) {
-        this.truststorePassword = truststorePassword;
     }
 
     public String getSftpUsername() {

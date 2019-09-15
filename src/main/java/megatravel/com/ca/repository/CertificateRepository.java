@@ -1,6 +1,6 @@
 package megatravel.com.ca.repository;
 
-import megatravel.com.ca.config.AppConfig;
+import megatravel.com.ca.config.CAConfig;
 import megatravel.com.ca.domain.cert.CerChanPrivateKey;
 import megatravel.com.ca.domain.enums.CerType;
 import megatravel.com.ca.generator.helper.IssuerData;
@@ -35,7 +35,7 @@ import java.util.Collections;
 public class CertificateRepository {
 
     @Autowired
-    private AppConfig config;
+    private CAConfig config;
 
     public void store(X509Certificate[] chain, PrivateKey privateKey) {
         char[] password = config.getKeystorePassword().toCharArray();

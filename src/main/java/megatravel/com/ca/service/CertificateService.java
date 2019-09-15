@@ -1,6 +1,6 @@
 package megatravel.com.ca.service;
 
-import megatravel.com.ca.config.AppConfig;
+import megatravel.com.ca.config.CAConfig;
 import megatravel.com.ca.domain.cert.Certificate;
 import megatravel.com.ca.domain.cert.CertificateDistribution;
 import megatravel.com.ca.domain.enums.CerType;
@@ -36,7 +36,7 @@ import java.util.List;
 public class CertificateService {
 
     @Autowired
-    private AppConfig config;
+    private CAConfig config;
 
     @Autowired
     private CertificateRepository repository;

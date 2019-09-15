@@ -1,6 +1,6 @@
 package megatravel.com.ca.generator;
 
-import megatravel.com.ca.config.AppConfig;
+import megatravel.com.ca.config.CAConfig;
 import megatravel.com.ca.domain.enums.PeriodUnit;
 import megatravel.com.ca.generator.extension.builder.ExtensionBuilderFactory;
 import megatravel.com.ca.generator.extension.builder.X509ExtensionBuilder;
@@ -38,7 +38,7 @@ import java.util.List;
 public class CertificateGenerator {
 
     @Autowired
-    private AppConfig config;
+    private CAConfig config;
 
     private List<X509ExtensionBuilder> extensionBuilders;
 
@@ -46,7 +46,7 @@ public class CertificateGenerator {
         this.extensionBuilders = ExtensionBuilderFactory.getAllExtensions();
     }
 
-    public CertificateGenerator(AppConfig config) {
+    public CertificateGenerator(CAConfig config) {
         this.config = config;
         this.extensionBuilders = ExtensionBuilderFactory.getAllExtensions();
     }
@@ -88,7 +88,7 @@ public class CertificateGenerator {
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance(config.getKeyAlgorithm());
         SecureRandom random = SecureRandom.getInstance(config.getSeedAlgorithm(), config.getSeedProvider());
         if (isCA) keyGen.initialize(config.getCaKeySize(), random);
-        else keyGen.initialize(config.getEndEntityKeysize(), random);
+        else keyGen.initialize(config.getEndEntityKeySize(), random);
         return keyGen.generateKeyPair();
     }
 
