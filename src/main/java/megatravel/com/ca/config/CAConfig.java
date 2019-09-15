@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CAConfig {
-    @Value("${ca.keystore}")
+    @Value("${ca.keystore.path}")
     private String keystore;
 
     @Value("${ca.keystore.password}")
