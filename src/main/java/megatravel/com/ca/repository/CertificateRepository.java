@@ -4,7 +4,7 @@ import megatravel.com.ca.config.AppConfig;
 import megatravel.com.ca.domain.cert.CerChanPrivateKey;
 import megatravel.com.ca.domain.enums.CerType;
 import megatravel.com.ca.generator.helper.IssuerData;
-import megatravel.com.ca.util.GeneralException;
+import megatravel.com.ca.util.exception.GeneralException;
 import net.schmizz.sshj.DefaultConfig;
 import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.sftp.SFTPClient;

@@ -2,7 +2,7 @@ package megatravel.com.ca.service;
 
 import megatravel.com.ca.domain.rbac.User;
 import megatravel.com.ca.repository.UserRepository;
-import megatravel.com.ca.util.GeneralException;
+import megatravel.com.ca.util.exception.GeneralException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;

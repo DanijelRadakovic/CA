@@ -1,7 +1,7 @@
 package megatravel.com.ca.generator.extension.builder;
 
 import megatravel.com.ca.generator.extension.holder.X509ExtensionHolder;
-import megatravel.com.ca.util.ValidationException;
+import megatravel.com.ca.util.exception.ValidationException;
 import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 

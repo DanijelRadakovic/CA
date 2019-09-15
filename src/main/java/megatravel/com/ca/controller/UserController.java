@@ -1,14 +1,14 @@
 package megatravel.com.ca.controller;
 
 import megatravel.com.ca.converter.UserConverter;
-import megatravel.com.ca.domain.DTO.auth.AuthenticationRequestDTO;
-import megatravel.com.ca.domain.DTO.auth.AuthenticationResponseDTO;
-import megatravel.com.ca.domain.DTO.auth.LoggedUserDTO;
-import megatravel.com.ca.domain.DTO.auth.RegisterDTO;
+import megatravel.com.ca.domain.dto.auth.AuthenticationRequestDTO;
+import megatravel.com.ca.domain.dto.auth.AuthenticationResponseDTO;
+import megatravel.com.ca.domain.dto.auth.LoggedUserDTO;
+import megatravel.com.ca.domain.dto.auth.RegisterDTO;
 import megatravel.com.ca.domain.rbac.User;
 import megatravel.com.ca.security.TokenUtils;
 import megatravel.com.ca.service.UserService;
-import megatravel.com.ca.util.GeneralException;
+import megatravel.com.ca.util.exception.GeneralException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

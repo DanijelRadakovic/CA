@@ -9,7 +9,7 @@ import megatravel.com.ca.generator.extension.holder.ExtensionHolders;
 import megatravel.com.ca.generator.helper.CerPrivateKey;
 import megatravel.com.ca.generator.helper.IssuerData;
 import megatravel.com.ca.generator.helper.SubjectData;
-import megatravel.com.ca.util.ValidationException;
+import megatravel.com.ca.util.exception.ValidationException;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.AuthorityKeyIdentifier;
 import org.bouncycastle.asn1.x509.Extension;

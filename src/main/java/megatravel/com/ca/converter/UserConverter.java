@@ -1,10 +1,10 @@
 package megatravel.com.ca.converter;
 
-import megatravel.com.ca.domain.DTO.auth.LoggedUserDTO;
-import megatravel.com.ca.domain.DTO.auth.RegisterDTO;
-import megatravel.com.ca.domain.DTO.rbac.PrivilegeDTO;
-import megatravel.com.ca.domain.DTO.rbac.RoleDTO;
-import megatravel.com.ca.domain.DTO.rbac.UserDTO;
+import megatravel.com.ca.domain.dto.auth.LoggedUserDTO;
+import megatravel.com.ca.domain.dto.auth.RegisterDTO;
+import megatravel.com.ca.domain.dto.rbac.PrivilegeDTO;
+import megatravel.com.ca.domain.dto.rbac.RoleDTO;
+import megatravel.com.ca.domain.dto.rbac.UserDTO;
 import megatravel.com.ca.domain.rbac.Privilege;
 import megatravel.com.ca.domain.rbac.Role;
 import megatravel.com.ca.domain.rbac.User;

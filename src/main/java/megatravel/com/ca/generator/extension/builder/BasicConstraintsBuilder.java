@@ -2,7 +2,7 @@ package megatravel.com.ca.generator.extension.builder;
 
 import megatravel.com.ca.generator.extension.holder.BasicConstraintsHolder;
 import megatravel.com.ca.generator.extension.holder.X509ExtensionHolder;
-import megatravel.com.ca.util.ValidationException;
+import megatravel.com.ca.util.exception.ValidationException;
 import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.cert.CertIOException;

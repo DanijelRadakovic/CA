@@ -1,6 +1,6 @@
 package megatravel.com.ca.controller;
 
-import megatravel.com.ca.util.GeneralException;
+import megatravel.com.ca.util.exception.GeneralException;
 import org.everit.json.schema.ValidationException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

@@ -13,8 +13,8 @@ import megatravel.com.ca.generator.extension.holder.SubjectAlternativeNameHolder
 import megatravel.com.ca.generator.helper.CerPrivateKey;
 import megatravel.com.ca.repository.CertificateRepository;
 import megatravel.com.ca.repository.CertificateStorage;
-import megatravel.com.ca.util.GeneralException;
-import megatravel.com.ca.util.ValidationException;
+import megatravel.com.ca.util.exception.GeneralException;
+import megatravel.com.ca.util.exception.ValidationException;
 import org.bouncycastle.asn1.ASN1OctetString;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.BasicConstraints;

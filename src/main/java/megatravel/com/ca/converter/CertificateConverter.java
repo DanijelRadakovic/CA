@@ -1,17 +1,16 @@
 package megatravel.com.ca.converter;
 
-import megatravel.com.ca.domain.DTO.cer.CertificateDTO;
-import megatravel.com.ca.domain.DTO.cer.CertificateDistributionDTO;
-import megatravel.com.ca.domain.DTO.cer.CertificateRequestDTO;
-import megatravel.com.ca.domain.DTO.cer.SubjectDTO;
-import megatravel.com.ca.domain.DTO.cer.ext.AccessDescriptionDTO;
-import megatravel.com.ca.domain.DTO.cer.ext.KeyUsageDTO;
 import megatravel.com.ca.domain.cert.CertificateDistribution;
+import megatravel.com.ca.domain.dto.cer.CertificateDistributionDTO;
+import megatravel.com.ca.domain.dto.cer.CertificateRequestDTO;
+import megatravel.com.ca.domain.dto.cer.SubjectDTO;
+import megatravel.com.ca.domain.dto.cer.ext.AccessDescriptionDTO;
+import megatravel.com.ca.domain.dto.cer.ext.KeyUsageDTO;
 import megatravel.com.ca.domain.enums.KeyPurposeType;
 import megatravel.com.ca.generator.extension.holder.*;
 import megatravel.com.ca.generator.helper.PolicyDescriber;
 import megatravel.com.ca.generator.helper.PolicyQualifierDescriber;
-import megatravel.com.ca.util.GeneralException;
+import megatravel.com.ca.util.exception.GeneralException;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x500.X500Name;
@@ -24,9 +23,7 @@ import org.springframework.http.HttpStatus;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.security.cert.X509Certificate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -53,11 +50,6 @@ public class CertificateConverter extends AbstractConverter {
                 put("title", BCStyle.T);
                 put("pseudonym", BCStyle.PSEUDONYM);
             }};
-
-    public static List<CertificateDTO> fromListX509ToDTO(List<X509Certificate> certs) {
-        return certs.stream().map(cert -> new CertificateDTO(0L, cert.getSerialNumber().toString(),
-                cert.getSubjectDN().toString(), true)).collect(Collectors.toList());
-    }
 
     public static X500Name toX500Name(SubjectDTO subject, boolean isCA) {
         String value;

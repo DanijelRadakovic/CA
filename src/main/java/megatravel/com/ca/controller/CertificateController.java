@@ -2,12 +2,12 @@ package megatravel.com.ca.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import megatravel.com.ca.converter.CertificateConverter;
-import megatravel.com.ca.domain.DTO.cer.CertificateDTO;
-import megatravel.com.ca.domain.DTO.cer.CertificateDistributionDTO;
-import megatravel.com.ca.domain.DTO.cer.CertificateRequestDTO;
+import megatravel.com.ca.domain.dto.cer.CertificateDTO;
+import megatravel.com.ca.domain.dto.cer.CertificateDistributionDTO;
+import megatravel.com.ca.domain.dto.cer.CertificateRequestDTO;
 import megatravel.com.ca.domain.enums.RevokeReason;
 import megatravel.com.ca.service.CertificateService;
-import megatravel.com.ca.util.ValidationException;
+import megatravel.com.ca.util.exception.ValidationException;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

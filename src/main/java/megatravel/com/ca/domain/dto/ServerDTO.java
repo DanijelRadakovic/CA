@@ -1,38 +1,25 @@
-package megatravel.com.ca.domain;
+package megatravel.com.ca.domain.dto;
 
-import megatravel.com.ca.domain.dto.ServerDTO;
+import megatravel.com.ca.domain.Server;
 import megatravel.com.ca.domain.enums.ServerType;
 
-import javax.persistence.*;
-
-@Entity
-public class Server {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class ServerDTO {
     private Long id;
-
-    @Column(nullable = false, unique = true)
     private String name;
-
-    @Column(nullable = false, unique = true)
     private String address;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
     private ServerType type;
 
-    public Server() {
+    public ServerDTO() {
     }
 
-    public Server(Long id, String name, String address, ServerType type) {
+    public ServerDTO(Long id, String name, String address, ServerType type) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.type = type;
     }
 
-    public Server(ServerDTO server) {
+    public ServerDTO(Server server) {
         this.id = server.getId();
         this.name = server.getName();
         this.address = server.getAddress();

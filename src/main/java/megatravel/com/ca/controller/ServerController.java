@@ -2,8 +2,8 @@ package megatravel.com.ca.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import megatravel.com.ca.converter.ServerConverter;
-import megatravel.com.ca.domain.DTO.ServerDTO;
 import megatravel.com.ca.domain.Server;
+import megatravel.com.ca.domain.dto.ServerDTO;
 import megatravel.com.ca.service.ServerService;
 import org.everit.json.schema.ValidationException;
 import org.slf4j.Logger;
