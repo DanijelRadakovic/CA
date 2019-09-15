@@ -23,13 +23,14 @@ import org.springframework.http.HttpStatus;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CertificateConverter extends AbstractConverter {
-
-    private static final Map<String, ASN1ObjectIdentifier> x500NameMapper =
+    
+    private static final Map<String, ASN1ObjectIdentifier> x500NameMapper = Collections.unmodifiableMap(
             new HashMap<String, ASN1ObjectIdentifier>() {{
                 put("commonName", BCStyle.CN);
                 put("surname", BCStyle.SURNAME);
@@ -49,7 +50,7 @@ public class CertificateConverter extends AbstractConverter {
                 put("initials", BCStyle.INITIALS);
                 put("title", BCStyle.T);
                 put("pseudonym", BCStyle.PSEUDONYM);
-            }};
+            }});
 
     public static X500Name toX500Name(SubjectDTO subject, boolean isCA) {
         String value;

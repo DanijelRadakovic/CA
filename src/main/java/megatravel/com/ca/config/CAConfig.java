@@ -95,7 +95,7 @@ public class CAConfig {
     }
 
     public PeriodUnit getPeriodUnit() {
-        return PeriodUnit.factory(periodUnit);
+        return PeriodUnit.fromString(periodUnit);
     }
 
     public void setPeriodUnit(PeriodUnit periodUnit) {

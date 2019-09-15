@@ -19,7 +19,7 @@ public enum PeriodUnit {
         return this.name;
     }
 
-    public static PeriodUnit factory(String name) {
+    public static PeriodUnit fromString(String name) {
         if (name.equals("D")) {
             return DAY;
         } else if (name.equals("M")) {
