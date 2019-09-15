@@ -29,8 +29,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CertificateConverter extends AbstractConverter {
-    
-    private static final Map<String, ASN1ObjectIdentifier> x500NameMapper = Collections.unmodifiableMap(
+
+    private static final Map<String, ASN1ObjectIdentifier> X500NAME_MAPPER = Collections.unmodifiableMap(
             new HashMap<String, ASN1ObjectIdentifier>() {{
                 put("commonName", BCStyle.CN);
                 put("surname", BCStyle.SURNAME);
@@ -61,7 +61,7 @@ public class CertificateConverter extends AbstractConverter {
             try {
                 value = (String) PropertyUtils.getProperty(subject, field.getName());
                 if (value != null && !value.equals("")) {
-                    builder.addRDN(x500NameMapper.get(field.getName()), value);
+                    builder.addRDN(X500NAME_MAPPER.get(field.getName()), value);
                 }
             } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 throw new GeneralException(e.getMessage(), HttpStatus.BAD_REQUEST);

@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/api/cer")
 public class CertificateController extends ValidationController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CertificateController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CertificateController.class);
 
     @Autowired
     private CertificateService certificateService;
@@ -37,7 +37,7 @@ public class CertificateController extends ValidationController {
      */
     @GetMapping
     public ResponseEntity<List<CertificateDTO>> getAll() {
-        logger.info("action=getAllCertificates status=success");
+        LOGGER.info("action=getAllCertificates status=success");
         return new ResponseEntity<>(CertificateConverter.fromEntityList(certificateService.findAll(),
                 CertificateDTO::new), HttpStatus.OK);
     }
@@ -49,7 +49,7 @@ public class CertificateController extends ValidationController {
      */
     @GetMapping("/active")
     public ResponseEntity<List<CertificateDTO>> getAllActive() {
-        logger.info("action=getAllActiveCertificates status=success");
+        LOGGER.info("action=getAllActiveCertificates status=success");
         return new ResponseEntity<>(CertificateConverter.fromEntityList(certificateService.findAllActive(),
                 CertificateDTO::new), HttpStatus.OK);
     }
@@ -61,7 +61,7 @@ public class CertificateController extends ValidationController {
      */
     @GetMapping("/ca")
     public ResponseEntity<List<CertificateDTO>> getAllCA() {
-        logger.info("action=getAllCA status=success");
+        LOGGER.info("action=getAllCA status=success");
         return new ResponseEntity<>(CertificateConverter.fromEntityList(certificateService.findAllCA(),
                 CertificateDTO::new), HttpStatus.OK);
     }
@@ -73,7 +73,7 @@ public class CertificateController extends ValidationController {
      */
     @GetMapping("/ca/active")
     public ResponseEntity<List<CertificateDTO>> getAllActiveCA() {
-        logger.info("action=getAllActiveCA status=success");
+        LOGGER.info("action=getAllActiveCA status=success");
         return new ResponseEntity<>(CertificateConverter.fromEntityList(certificateService.findAllActiveCA(),
                 CertificateDTO::new), HttpStatus.OK);
     }
@@ -85,7 +85,7 @@ public class CertificateController extends ValidationController {
      */
     @GetMapping("/client")
     public ResponseEntity<List<CertificateDTO>> getAllClients() {
-        logger.info("action=getAllClients status=success");
+        LOGGER.info("action=getAllClients status=success");
         return new ResponseEntity<>(CertificateConverter.fromEntityList(certificateService.findAllClients(),
                 CertificateDTO::new), HttpStatus.OK);
     }
@@ -97,7 +97,7 @@ public class CertificateController extends ValidationController {
      */
     @GetMapping("/client/active")
     public ResponseEntity<List<CertificateDTO>> getAllActiveClients() {
-        logger.info("action=getAllClients status=success");
+        LOGGER.info("action=getAllClients status=success");
         return new ResponseEntity<>(CertificateConverter.fromEntityList(certificateService.findAllActiveClients(),
                 CertificateDTO::new), HttpStatus.OK);
     }
@@ -115,10 +115,10 @@ public class CertificateController extends ValidationController {
         try {
             X500Name name = CertificateConverter.toX500Name(cer.getSubjectDN(), cer.getBasicConstraints().iscA());
             certificateService.save(name, cer.getIssuerSN(), CertificateConverter.toExtensionHolders(cer));
-            logger.info("action=generateCert dn={} status=success", name);
+            LOGGER.info("action=generateCert dn={} status=success", name);
             return new ResponseEntity<>("Certificate successfully created.", HttpStatus.OK);
         } catch (NullPointerException e) {
-            logger.info("action=generateCert status=failure cause=BasicConstraintsOmitted");
+            LOGGER.info("action=generateCert status=failure cause=BasicConstraintsOmitted");
             return new ResponseEntity<>("Basic Constraints field must be present in certificate.",
                     HttpStatus.BAD_REQUEST);
         }
@@ -134,7 +134,7 @@ public class CertificateController extends ValidationController {
     @DeleteMapping(value = "/{id}/{reason}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> delete(@PathVariable String id, @PathVariable String reason) {
         certificateService.remove(Long.parseLong(id), RevokeReason.valueOf(reason.toUpperCase()));
-        logger.info("action=removeCert certId={} status=success", id);
+        LOGGER.info("action=removeCert certId={} status=success", id);
         return new ResponseEntity<>("Certificate successfully deleted.", HttpStatus.OK);
     }
 
@@ -149,7 +149,7 @@ public class CertificateController extends ValidationController {
         validateJSON(request, "distribution.json");
         CertificateDistributionDTO cert = new ObjectMapper().readValue(request, CertificateDistributionDTO.class);
         certificateService.distribute(CertificateConverter.toEntity(cert));
-        logger.info("action=distributeCert serialNumber={} status=success", cert.getSerialNumber());
+        LOGGER.info("action=distributeCert serialNumber={} status=success", cert.getSerialNumber());
         return new ResponseEntity<>("Certificate successfully distributed.", HttpStatus.OK);
     }
 }

@@ -28,7 +28,7 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -52,13 +52,13 @@ public class UserController {
     public ResponseEntity<Object> getById(@PathVariable Long id) {
         try {
             User user = userService.findById(id);
-            logger.info("userId={} action=get status=success", id);
+            LOGGER.info("userId={} action=get status=success", id);
             return new ResponseEntity<>(UserConverter.fromRegisteringEntity(user), HttpStatus.OK);
         } catch (GeneralException e) {
-            logger.warn("userId={} action=get status=failure", id);
+            LOGGER.warn("userId={} action=get status=failure", id);
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e1) {
-            logger.error("userId={} action=get status=failure message={}", id, e1.getMessage());
+            LOGGER.error("userId={} action=get status=failure message={}", id, e1.getMessage());
             return new ResponseEntity<>(e1.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -71,10 +71,10 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         try {
-            logger.info("action=getAllUsers status=success");
+            LOGGER.info("action=getAllUsers status=success");
             return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("action=getAllUsers status=failure message={}", e.getMessage());
+            LOGGER.error("action=getAllUsers status=failure message={}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -99,10 +99,10 @@ public class UserController {
             LoggedUserDTO user = UserConverter.fromLoggedEntity(userService.findByUsername(userDetails.getUsername()));
             String token = tokenUtils.generateToken(userDetails);
 
-            logger.info("username={} action=login status=success", authenticationRequest.getUsername());
+            LOGGER.info("username={} action=login status=success", authenticationRequest.getUsername());
             return new ResponseEntity<>(new AuthenticationResponseDTO(user, token), HttpStatus.OK);
         } catch (Exception e) {
-            logger.info("username={} action=login status=failure", authenticationRequest.getUsername());
+            LOGGER.info("username={} action=login status=failure", authenticationRequest.getUsername());
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
@@ -117,13 +117,13 @@ public class UserController {
     public ResponseEntity<Object> register(@RequestBody RegisterDTO registerDTO) {
         try {
             User user = userService.register(UserConverter.toRegisteringEntity(registerDTO));
-            logger.info("username={} action=signUp status=success", registerDTO.getUsername());
+            LOGGER.info("username={} action=signUp status=success", registerDTO.getUsername());
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (GeneralException e) {
-            logger.warn("username={} action=signUp status=failure", registerDTO.getUsername());
+            LOGGER.warn("username={} action=signUp status=failure", registerDTO.getUsername());
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         } catch (Exception e1) {
-            logger.error("username={} action=signUp status=failure message={}",
+            LOGGER.error("username={} action=signUp status=failure message={}",
                     registerDTO.getUsername(), e1.getMessage());
             return new ResponseEntity<>(e1.getMessage(), HttpStatus.BAD_REQUEST);
         }

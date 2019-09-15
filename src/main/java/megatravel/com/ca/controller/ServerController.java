@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/api/server")
 public class ServerController extends ValidationController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ServerController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerController.class);
 
     @Autowired
     private ServerService serverService;
@@ -33,7 +33,7 @@ public class ServerController extends ValidationController {
      */
     @GetMapping
     public ResponseEntity<List<ServerDTO>> findAll() {
-        logger.info("action=getAllServers status=success");
+        LOGGER.info("action=getAllServers status=success");
         return new ResponseEntity<>(ServerConverter.fromEntityList(serverService.getAll(), ServerDTO::new),
                 HttpStatus.OK);
     }
@@ -46,7 +46,7 @@ public class ServerController extends ValidationController {
      */
     @GetMapping("{id}")
     public ResponseEntity<ServerDTO> findById(@PathVariable String id) {
-        logger.info("serverId={} action=get status=success", id);
+        LOGGER.info("serverId={} action=get status=success", id);
         return new ResponseEntity<>(new ServerDTO(serverService.findById(Long.parseLong(id))), HttpStatus.FOUND);
     }
 
@@ -59,7 +59,7 @@ public class ServerController extends ValidationController {
     @PostMapping
     public ResponseEntity<ServerDTO> save(@RequestBody String server) throws IOException, ValidationException {
         validateJSON(server, "server.json");
-        logger.info("action=saveServer status=success");
+        LOGGER.info("action=saveServer status=success");
         return new ResponseEntity<>(new ServerDTO(serverService.save(
                 new Server(new ObjectMapper().readValue(server, ServerDTO.class)))), HttpStatus.OK);
     }
@@ -73,7 +73,7 @@ public class ServerController extends ValidationController {
     @DeleteMapping(value = "{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> delete(@PathVariable String id) {
         serverService.remove(Long.parseLong(id));
-        logger.info("serverId={} action=removeServer status=success", id);
+        LOGGER.info("serverId={} action=removeServer status=success", id);
         return new ResponseEntity<>("Server successfully deleted!", HttpStatus.OK);
     }
 }
