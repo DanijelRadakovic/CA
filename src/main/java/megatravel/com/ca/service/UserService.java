@@ -56,7 +56,7 @@ public class UserService {
     public User register(User user) {
         try {
 
-            if (userRepository.findUserByUsername(user.getUsername()) != null) {
+            if (userRepository.findByUsername(user.getUsername()) != null) {
                 throw new GeneralException("User with given ID already exists!", HttpStatus.CONFLICT);
             }
             return userRepository.save(user);
@@ -89,7 +89,7 @@ public class UserService {
      */
     public void deleteByUsername(String username) {
         try {
-            User user = userRepository.findUserByUsername(username);
+            User user = userRepository.findByUsername(username);
             if (user != null) {
                 userRepository.delete(user);
             } else {
@@ -109,7 +109,7 @@ public class UserService {
      */
     public User logIn(String username, String password) {
         try {
-            User user = userRepository.findUserByUsername(username);
+            User user = userRepository.findByUsername(username);
             if (user != null) {
                 return user;
                 //return (authenticate(password, user.getPassword(), user.getSalt()) ? user : null);
@@ -165,6 +165,6 @@ public class UserService {
 
 
     public User findByUsername(String username) {
-        return userRepository.findUserByUsername(username);
+        return userRepository.findByUsername(username);
     }
 }

@@ -35,7 +35,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         final String authToken = httpRequest.getHeader(tokenHeader);
         final String username = tokenUtils.getUsernameFromToken(authToken);
-        System.out.println(authToken);
+
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             final UserDetails userDetails = userDetailsService.loadUserByUsername(username);

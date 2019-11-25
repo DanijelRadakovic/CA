@@ -6,16 +6,14 @@ import megatravel.com.ca.domain.rbac.User;
 public class LoggedUserDTO {
 
     private Long id;
-    private String name;
     private String username;
     private String password;
 
     public LoggedUserDTO() {
     }
 
-    public LoggedUserDTO(Long id, String firstName, String username, String password) {
+    public LoggedUserDTO(Long id, String username, String password) {
         this.id = id;
-        this.name = firstName;
         this.username = username;
         this.password = password;
     }
@@ -32,14 +30,6 @@ public class LoggedUserDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getUsername() {
